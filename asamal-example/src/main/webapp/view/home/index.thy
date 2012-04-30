@@ -23,7 +23,7 @@
 
         <script type="text/javascript">
             function reloadTweets() {
-                $a.reRender('home', 'reload', '""', '"tweetList"');
+                <span th:utext="${a.reRender('home', 'reload', '\'\'', '\'tweetList\'')}" th:remove="tag" />
             }
 
             $(document).ready(function () {
@@ -34,7 +34,6 @@
         <form action="/hehe" th:attr="action=${a.formAction('home', 'addTweet')}" method="post" id="tweetForm">
             <label>Tweet Text</label>
             <textarea rows="10" cols="30" name="tweet.msg" th:text="${tweet} ? ${tweet.msg} : ''">Dupa blada</textarea>
-            <span th:text="${tweet} ? ${tweet.msg} : ''" />
             <input type="submit" value="Add"/>
         </form>
     </body>

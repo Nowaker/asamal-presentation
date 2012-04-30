@@ -6,15 +6,11 @@ import pl.softwaremill.asamal.controller.AsamalContext;
 import pl.softwaremill.asamal.controller.ControllerBean;
 import pl.softwaremill.asamal.controller.annotation.Controller;
 import pl.softwaremill.asamal.controller.annotation.Get;
-import pl.softwaremill.asamal.controller.annotation.Json;
 import pl.softwaremill.asamal.controller.annotation.Post;
 
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Home page controller
@@ -44,20 +40,16 @@ public class Home extends ControllerBean implements Serializable {
     @Post
     public void addTweet() {
         doAutoBinding("tweet.msg");
-
         tweet.setDate(new Date());
 
         if (validateBean("tweet", tweet)) {
             twitter.addTweet(tweet);
-
             redirect("index");
             addMessageToFlash("Tweet added", AsamalContext.MessageSeverity.SUCCESS);
-        }
-        else {
+        } else {
+            putInContext("tweet", tweet);
             addMessageToFlash("Validation errors", AsamalContext.MessageSeverity.ERR);
-
             index();
-
             includeView("index");
         }
     }
